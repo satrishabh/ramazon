@@ -24,4 +24,22 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @PutMapping("/user/{userName}")
+    public User updateUser(@PathVariable String userName,@RequestBody User userRequest){
+
+        User user= userRepository.getByUserName(userName);
+        user.setEmail(userRequest.getEmail());
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setPassword(userRequest.getPassword());
+
+        return userRepository.save(user);
+    }
+
+    @DeleteMapping("/user/{userName}")
+    public void deleteUser(@PathVariable String userName){
+        User user= userRepository.getByUserName(userName);
+        userRepository.delete(user);
+    }
 }
